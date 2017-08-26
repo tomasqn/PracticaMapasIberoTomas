@@ -4,7 +4,9 @@
     <title>Mapas</title>
   </head>
   <body>
+    <input type="text" id="buscador">
     <div id="map" style="height: 500px; width: 500px"></div>
+    <br>
     <br>
     <br>
     <ul id="lista">
@@ -25,6 +27,35 @@
           animation: google.maps.Animation.DROP
         });
 
+        var input = document.getElementById('buscador');
+        var buscador = new google.maps.places.SearchBox(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        var markers = [];
+        buscador.addListener('places_changed', function () {
+          var places = buscador.getPlaces();
+          var bounds = new google.maps.LatLngBounds();
+
+          for (var index in places ) {
+
+            var place = places[index];
+
+            markers.push(new google.maps.Marker({
+              position: place.geometry.location,
+              map:map,
+              animation: google.maps.Animation.DROP
+            }));
+
+            if (place.geometry.viewport) {
+                bounds.union(place.geometry.viewport);
+            }
+            else {
+              bounds.extend(place.geometry.location);
+            }
+          }
+          map.fitBounds(bounds);
+          
+        })
         var accionEvento = (event) => {
 
             document.getElementById('lista').innerHTML = "";
@@ -56,7 +87,7 @@
     </script>
 
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBABiajgPoHzyff3POQH-XkkFI2qPMAV70&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBABiajgPoHzyff3POQH-XkkFI2qPMAV70&callback=initMap&libraries=places">
     </script>
   </body>
 </html>
