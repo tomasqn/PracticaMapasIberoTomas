@@ -5,8 +5,14 @@
   </head>
   <body>
     <div id="map" style="height: 500px; width: 500px"></div>
+    <br>
+    <br>
+    <ul id="lista">
+
+    </ul>
     <script>
       function initMap() {
+
         var coor = {lat: 19.341821, lng: -99.2604145};
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 15,
@@ -14,8 +20,38 @@
         });
         var marker = new google.maps.Marker({
           position: coor,
-          map: map
+          draggable: true,
+          map: map,
+          animation: google.maps.Animation.DROP
         });
+
+        var accionEvento = (event) => {
+
+            document.getElementById('lista').innerHTML = "";
+
+            var valoresGeo = new google.maps.Geocoder;
+            //console.log(event);
+            var latLng = {lat: event.latLng.lat(), lng: event.latLng.lng()};
+            //console.log(latLng);
+            valoresGeo.geocode({'location': latLng}, function (results, status) {
+                if (status == 'OK') {
+                  for (var indice in results) {
+                    var address = results[indice].formatted_address;
+                    var nodo = document.createElement('LI');
+                    //nodo == <li></li>
+                    var textoNodo = document.createTextNode(address);
+                    nodo.appendChild(textoNodo);
+                    //nodo == <li>Hola</li>
+                    document.getElementById('lista').appendChild(nodo);
+                  }
+                }
+                else {
+                  alert('Universo paralelo');
+                }
+            })
+        }
+
+        marker.addListener('dragend', accionEvento)
       }
     </script>
 
