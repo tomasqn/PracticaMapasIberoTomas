@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Javascript2</title>
+</head>
+<body>
+  <input type="text" name="nombre" id="nombre">
+  <br>
+  <br>
+  <button onclick="saludar()">Saluda!</button>
+
+  <script type="text/javascript">
+    function saludar() {
+      var nombre = document.getElementById('nombre').value;
+      alert(nombre);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>javascript4</title>
+  </head>
+  <body>
+
+    <form action="clase42.html" onsubmit="return valida()">
+      <input type="text" name="nombre" id="nombre">
+      <br>
+      <br>
+      <button type="submit">Boton</button>
+    </form>
+
+    <script type="text/javascript">
+
+    var abc = 'qwertyuiopasdfghjklzxcvbnm '
+    var numeros = '0123456789'
+
+      function valida(){
+
+        var dato = document.getElementById('nombre').value;
+
+          for (var indice in dato) {
+            if (abc.indexOf(dato[indice]) == -1) {
+              alert('dato invalido');
+              return true;
+            }
+          }
+      }
+
+      /*function valida2(e){
+        if (abc.indexOf(e.key) == -1) {
+          return false;
+        }
+
+      }
+
+      function valida3(e){
+        if (numeros.indexOf(e.key) == -1) {
+          return false;
+        }
+      }*/
+
+    </script>
+  </body>
+</html>
